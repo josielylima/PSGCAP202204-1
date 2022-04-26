@@ -1,0 +1,28 @@
+Create Procedure SP_Obter_Informacoes_Completas_Por_Data_Admissao
+  @Ano Int,
+ @Mes Int,
+ @Dia Int
+
+As
+Begin
+
+SELECT 
+	FDP.ID_Funcionario, 
+	FDP.Matricula_Funcionario, 
+	FDP.Nome_Funcionario, 
+	FDP.Sobrenome_Funcionario, 
+	FDE.Data_Admissao_Funcionario, 
+	FDE.Ctps_Funcionario, 
+	FDP.Sexo_Funcionario, 
+	FDP.Datanasc_Funcionario, 
+    FDP.Email_Funcionario
+FROM Funcionarios_Dados_Empresa AS FDE INNER JOIN
+    Funcionario_Dados_Pessoais AS FDP ON FDE.Matricula_Funcionario = FDP.Matricula_Funcionario
+WHERE (FDP.Situacao = 1)
+And YEAR(Data_Admissao_Funcionario) =@Ano
+And MONTH(Data_Admissao_Funcionario) =@Mes
+And DAY (Data_Admissao_Funcionario) =@Dia
+Order By Data_Admissao_Funcionario ASC
+
+End;
+
